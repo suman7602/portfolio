@@ -302,6 +302,7 @@ img
     font-size: 30px;
     font-weight: 600;
     letter-spacing: 4px;
+    margin-top: 15px;
     color: var(--main-color);
 }
 .home-section .home-text h1
@@ -313,12 +314,13 @@ img
 }
 .home-section .home-text span
 {
-    font-size: 18px;
+    font-size: 30px;
     line-height: 28px;
     color: var(--black-900);
-    font-weight: 500;
-    display: block;
-    margin-top: 15px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    /* display: block; */
+    /* margin-top: 15px; */
 }
 .home-section .home-text p
 {
@@ -1001,6 +1003,81 @@ footer .copyright-text
     font-weight: 300;
     margin: 10px 0 0;
 }
+.toast {
+    visibility: hidden; /* Hidden by default */
+    min-width: 300px;
+    background-color: #28a745; /* Default success color */
+    color: white;
+    text-align: left;
+    border-radius: 8px;
+    padding: 16px 16px 16px 48px;
+    position: fixed;
+    z-index: 1000;
+    right: 30px;
+    top: 30px;
+    font-size: 17px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s, transform 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0); /* Bounces in */
+  }
+  
+  .toast.hide {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100%); /* Slides out */
+  }
+  
+  /* Icon Styles */
+  .toast-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+  }
+  
+  /* Success icon (Green checkmark) */
+  .toast-icon.success::before {
+    content: "✔️";
+  }
+  
+  /* Error icon (Red cross) */
+  .toast-icon.error::before {
+    content: "❌";
+  }
+  
+  /* Close button */
+  .toast-close {
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0 8px;
+  }
+  
+  .toast-close:hover {
+    color: #f0f0f0;
+  }
+  
+  /* For animations */
+  @keyframes bounceIn {
+    0% { transform: translateY(-100%); }
+    60% { transform: translateY(10%); }
+    80% { transform: translateY(-5%); }
+    100% { transform: translateY(0); }
+  }
+  
+  .toast.show {
+    animation: bounceIn 0.5s;
+  }
+  
 /*Responsive*/
 @media  (min-width:1300px) and (max-width:1399px)
 {

@@ -12,6 +12,13 @@
     />
     <!--===== Main CSS =====-->
     <link rel="stylesheet" href="css/style.css" />
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"
+      integrity="sha512-+2pW8xXU/rNr7VS+H62aqapfRpqFwnSQh9ap6THjsm41AxgA0MhFRtfrABS+Lx2KHJn82UOrnBKhjZOXpom2LQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
     <!--===== Navbar Start =====-->
@@ -86,7 +93,9 @@
           <div class="home-text">
             <h4>Hello</h4>
             <h1>Suman Chanda</h1>
-            <span>Web Developer | Problem Solver | Lifelong Learner</span>
+
+            <h4>I'm a <span class="typing">Web Developer</span></h4>
+
             <p>
               I’m a web developer who combines creativity with clean code to
               build user-friendly websites. I deliver solutions that exceed
@@ -567,11 +576,12 @@
         <!--===== Contact Form =====-->
         <div class="row">
           <div class="contact-form">
-            <form action="">
+            <form onsubmit="sendEmail(); reset(); return false">
               <div class="row">
                 <div class="w-50">
                   <div class="input-group">
                     <input
+                      id="name"
                       type="text"
                       placeholder="Name"
                       class="input-control"
@@ -579,6 +589,7 @@
                   </div>
                   <div class="input-group">
                     <input
+                      id="email"
                       type="email"
                       placeholder="Email"
                       class="input-control"
@@ -586,6 +597,7 @@
                   </div>
                   <div class="input-group">
                     <input
+                      id="subject"
                       type="text"
                       placeholder="Subject"
                       class="input-control"
@@ -595,6 +607,7 @@
                 <div class="w-50">
                   <div class="input-group">
                     <textarea
+                      id="message"
                       name=""
                       class="input-control"
                       placeholder="Message"
@@ -613,6 +626,14 @@
             </form>
           </div>
         </div>
+      </div>
+      <!-- Toast Notification -->
+      <div id="toast" class="toast">
+        <div id="toast-icon" class="toast-icon"></div>
+        <div id="toast-message" class="toast-message">
+          Email sent successfully!
+        </div>
+        <span id="toast-close" class="toast-close">&times;</span>
       </div>
     </section>
     <!--===== Contact Section End =====-->
@@ -652,5 +673,75 @@
     <!--===== Lightbox End =====-->
     <!--===== Main JS =====-->
     <script src="js/main.js"></script>
+    
+
+    <script>
+      function showToast(message, isSuccess = true) {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toast-message");
+        const toastIcon = document.getElementById("toast-icon");
+        const toastClose = document.getElementById("toast-close");
+
+        // Set the message and style
+        toastMessage.textContent = message;
+        if (isSuccess) {
+          toastIcon.classList.add("success");
+          toastIcon.classList.remove("error");
+          toast.style.backgroundColor = "#28a745"; // Success (green)
+        } else {
+          toastIcon.classList.add("error");
+          toastIcon.classList.remove("success");
+          toast.style.backgroundColor = "#dc3545"; // Error (red)
+        }
+
+        // Show the toast
+        toast.classList.add("show");
+
+        // Auto-hide the toast after 4 seconds
+        setTimeout(() => {
+          toast.classList.remove("show");
+          toast.classList.add("hide");
+        }, 4000);
+
+        // Allow manual closing
+        toastClose.onclick = function () {
+          toast.classList.remove("show");
+          toast.classList.add("hide");
+        };
+      }
+
+      function sendEmail() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value;
+
+        if (!name || !email || !subject || !message) {
+          alert("All fields are required!");
+          return;
+        }
+
+        Email.send({
+          SecureToken: "d7bdade8-95a4-4e7b-833f-060604a0dafa",
+          To: "sumanchanda760@gmail.com",
+          From: "sumanchanda760@gmail.com",
+          Subject: subject,
+          Body: `
+      <strong>Name:</strong> ${name} <br>
+      <strong>Email:</strong> ${email} <br>
+      <strong>Subject:</strong> ${subject} <br>
+      <strong>Message:</strong> ${message}
+    `,
+        })
+          .then((response) => {
+            showToast("Email sent successfully!");
+            console.log("Email sent:", response);
+          })
+          .catch((error) => {
+            showToast("Error: Could not send email.");
+            console.error("Failed to send email:", error);
+          });
+      }
+    </script>
   </body>
 </html>
